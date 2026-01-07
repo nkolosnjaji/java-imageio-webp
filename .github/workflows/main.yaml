@@ -23,4 +23,4 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Build and run tests with Maven
-        run: mvn --batch-mode --no-transfer-progress test
+        run: mvn --batch-mode --no-transfer-progress clean test

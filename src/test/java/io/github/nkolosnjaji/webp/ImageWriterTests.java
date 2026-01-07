@@ -146,11 +146,6 @@ class ImageWriterTests {
         assertEqualFiles(outPath , outputName);
     }
 
-    @Test
-    void benchmark() {
-
-    }
-
     @ParameterizedTest
     @ValueSource(strings = {"rgba", "rgb"})
     void writeLossless(String imageName) {
