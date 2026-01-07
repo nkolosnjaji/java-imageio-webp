@@ -1,0 +1,26 @@
+name: CI - Build and Test
+
+on:
+  push:
+    branches: ['**']  # Runs on push to any branch, including main
+  pull_request:
+    branches: ['**']  # Runs on PRs targeting any branch
+
+jobs:
+  build-and-test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, macos-15-intel, ubuntu-latest]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '25'
+          distribution: 'temurin'
+          cache: maven
+      - name: Build and run tests with Maven
+        run: mvn --batch-mode --no-transfer-progress test
