@@ -5,7 +5,7 @@
 
     <groupId>io.github.nkolosnjaji</groupId>
     <artifactId>java-imageio-webp</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <name>java-imageio-webp</name>
     <description>WebP JAVA ImageIO</description>
     <url>https://github.com/nkolosnjaji/java-imageio-webp</url>

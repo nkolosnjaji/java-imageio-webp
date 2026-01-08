@@ -23,16 +23,22 @@ writing WebP [images](https://developers.google.com/speed/webp) using JAVA Forei
     <dependency>
         <groupId>io.github.nkolosnjaji</groupId>
         <artifactId>java-imageio-webp-lib</artifactId>
-        <version>LATEST_VERSION</version>
+        <version>LATEST_LIB_VERSION</version>
         <classifier>ARCHITECTURE</classifier>
     </dependency>
 ```
 
-Possible values for architecture:
+**Possible values for architecture:**
 
 - unix_amd64 (x86-64)
 - mac_x86_64 (MacOS Intel)
 - mac_aarch64 (MacOS Silicon)
+
+**Compatibility Matrix:**
+
+| java-imageio-webp | java-imageio-webp-lib | WebP Version  |
+|-------------------|-----------------------|---------------|
+| 1.0.0             | 0.0.4                 | 1.6.0         | 
 
 2. Use like any other Image I/O reader and writer.
 
