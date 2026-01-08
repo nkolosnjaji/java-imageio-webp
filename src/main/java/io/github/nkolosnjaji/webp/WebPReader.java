@@ -34,7 +34,7 @@ public final class WebPReader extends ImageReader {
         }
         checkHeader();
 
-        WebPReaderParam  param = switch (imageReadParam) {
+        WebPReaderParam param = switch (imageReadParam) {
             case WebPReaderParam wrp -> wrp;
             case ImageReadParam _ -> new WebPReaderParam();
             case null -> new WebPReaderParam();
@@ -42,7 +42,8 @@ public final class WebPReader extends ImageReader {
 
         return switch (this.getInput()) {
             case ImageInputStream iis -> WebP.decode(iis, this.header, param);
-            case null, default -> throw new IllegalStateException(String.format("Unexpected value: %s", this.getInput().getClass()));
+            case null, default ->
+                    throw new IllegalStateException(String.format("Unexpected value: %s", this.getInput().getClass()));
         };
     }
 
@@ -86,17 +87,14 @@ public final class WebPReader extends ImageReader {
             iis.mark();
             try {
                 header = WebP.getHeader(iis);
-            }
-            catch (WebPException e) {
+            } catch (WebPException e) {
                 throw new IOException(NOT_A_WEBP_PICTURE);
             } finally {
                 iis.reset();
             }
-        }
-        else if (!(this.getInput() instanceof ImageInputStream)) {
+        } else if (!(this.getInput() instanceof ImageInputStream)) {
             throw new IllegalStateException("Expecting type of ImageInputStream.class"); //TODO check if InputStream should be also supported
-        }
-        else {
+        } else {
             throw new IOException(NOT_A_WEBP_PICTURE);
         }
     }

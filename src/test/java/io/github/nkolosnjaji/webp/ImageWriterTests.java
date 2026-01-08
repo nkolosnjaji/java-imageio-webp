@@ -14,8 +14,15 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static io.github.nkolosnjaji.webp.TestUtils.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static io.github.nkolosnjaji.webp.TestUtils.OUTPUT_DIR;
+import static io.github.nkolosnjaji.webp.TestUtils.WORKING_PATH;
+import static io.github.nkolosnjaji.webp.TestUtils.assertEqualFiles;
+import static io.github.nkolosnjaji.webp.TestUtils.getInputPath;
+import static io.github.nkolosnjaji.webp.TestUtils.getOutputPath;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class ImageWriterTests {
 
@@ -44,7 +51,7 @@ class ImageWriterTests {
 
         Path outPath = writeImage(bi, imageName);
 
-        assertEqualFiles(outPath , imageName);
+        assertEqualFiles(outPath, imageName);
     }
 
     @ParameterizedTest
@@ -57,8 +64,7 @@ class ImageWriterTests {
         WebPWriterParam param = new WebPWriterParam(0.5f);
         Path outPath = writeImage(bi, outputName, param);
 
-
-        assertEqualFiles(outPath , outputName);
+        assertEqualFiles(outPath, outputName);
     }
 
     @ParameterizedTest
@@ -72,7 +78,7 @@ class ImageWriterTests {
         param.setMethod(WebPWriterParam.WebPWriterMethod.FASTEST);
         Path outPath = writeImage(bi, outputName, param);
 
-        assertEqualFiles(outPath , outputName);
+        assertEqualFiles(outPath, outputName);
     }
 
     @ParameterizedTest
@@ -85,7 +91,7 @@ class ImageWriterTests {
         WebPWriterParam param = new WebPWriterParam(WebPWriterParam.WebPWriterPreset.ICON);
         Path outPath = writeImage(bi, outputName, param);
 
-        assertEqualFiles(outPath , outputName);
+        assertEqualFiles(outPath, outputName);
     }
 
     @ParameterizedTest
@@ -99,7 +105,7 @@ class ImageWriterTests {
         param.setImageHint(WebPWriterParam.WebPWriterHint.PHOTO);
         Path outPath = writeImage(bi, outputName, param);
 
-        assertEqualFiles(outPath , outputName);
+        assertEqualFiles(outPath, outputName);
     }
 
     @ParameterizedTest
@@ -114,7 +120,7 @@ class ImageWriterTests {
 
         Path outPath = writeImage(bi, outputName, param);
 
-        assertEqualFiles(outPath , outputName);
+        assertEqualFiles(outPath, outputName);
     }
 
     @ParameterizedTest
@@ -128,7 +134,7 @@ class ImageWriterTests {
         param.setResize(new Resize(100, 100));
         Path outPath = writeImage(bi, outputName, param);
 
-        assertEqualFiles(outPath , outputName);
+        assertEqualFiles(outPath, outputName);
     }
 
     @ParameterizedTest
@@ -143,7 +149,7 @@ class ImageWriterTests {
         param.setCrop(new Crop(100, 100, 100, 100));
         Path outPath = writeImage(bi, outputName, param);
 
-        assertEqualFiles(outPath , outputName);
+        assertEqualFiles(outPath, outputName);
     }
 
     @ParameterizedTest
@@ -157,14 +163,14 @@ class ImageWriterTests {
         param.setCompressionType(WebPWriterParam.COMPRESSION_LOSSLESS);
         Path outPath = writeImage(bi, outputName, param);
 
-        assertEqualFiles(outPath , outputName);
+        assertEqualFiles(outPath, outputName);
     }
 
     private static BufferedImage getInputFile(Path imagePath) {
         try (InputStream is = assertDoesNotThrow(() -> Files.newInputStream(imagePath))) {
             return assertDoesNotThrow(() -> ImageIO.read(is));
         } catch (IOException _) {
-           throw new RuntimeException(String.format("Unable to read input file from location: %s", imagePath.toString()));
+            throw new RuntimeException(String.format("Unable to read input file from location: %s", imagePath.toString()));
         }
     }
 
@@ -174,12 +180,8 @@ class ImageWriterTests {
 
     private Path writeImage(BufferedImage image, String name, WebPWriterParam param) {
         Path outPath = WORKING_PATH.resolve(OUTPUT_DIR, "%s.webp".formatted(name));
-
-
         assertDoesNotThrow(() -> writer.setOutput(outPath));
         assertDoesNotThrow(() -> writer.write(null, new IIOImage(image, null, null), param));
-//        assertDoesNotThrow(() -> writer.write(image));
-
         return outPath;
     }
 

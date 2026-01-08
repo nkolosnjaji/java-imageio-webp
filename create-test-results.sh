@@ -2,6 +2,8 @@
 
 rm src/test/resources/images/cwebp/*.webp
 
+# images for writer
+
 cwebp -quiet src/test/resources/images/input/rgb.png -o src/test/resources/images/cwebp/rgb.webp
 cwebp -quiet src/test/resources/images/input/rgba.png -o src/test/resources/images/cwebp/rgba.webp
 
@@ -29,3 +31,7 @@ cwebp -quiet -crop 100 100 100 100 -resize 100 100 src/test/resources/images/inp
 cwebp -quiet -lossless src/test/resources/images/input/rgb.png -o src/test/resources/images/cwebp/rgb_lossless.webp
 cwebp -quiet -lossless src/test/resources/images/input/rgba.png -o src/test/resources/images/cwebp/rgba_lossless.webp
 
+# images for reader
+
+cwebp -quiet -q 100 -m 6 -lossless src/test/resources/images/input/reader_rgb.png -o src/test/resources/images/cwebp/reader_rgb.webp
+cwebp -quiet -q 100 -m 6 -lossless src/test/resources/images/input/reader_rgba.png -o src/test/resources/images/cwebp/reader_rgba.webp

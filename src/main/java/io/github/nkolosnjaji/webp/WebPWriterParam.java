@@ -40,6 +40,7 @@ public final class WebPWriterParam extends ImageWriteParam {
 
     /**
      * Constructor with preset
+     *
      * @param preset (@see WebPWriterPreset) to use with default quality compression (0.75)
      */
     public WebPWriterParam(WebPWriterPreset preset) {
@@ -48,6 +49,7 @@ public final class WebPWriterParam extends ImageWriteParam {
 
     /**
      * Constructor with quality
+     *
      * @param compressionQuality quality compression with default preset (@see WebPWriterPreset)
      */
     public WebPWriterParam(float compressionQuality) {
@@ -56,8 +58,9 @@ public final class WebPWriterParam extends ImageWriteParam {
 
     /**
      * Constructor with quality compression and preset (@see WebPWriterPreset)
-     * @param compressionQuality  quality compression
-     * @param preset (@see WebPWriterPreset) predefined preset
+     *
+     * @param compressionQuality quality compression
+     * @param preset             (@see WebPWriterPreset) predefined preset
      */
     public WebPWriterParam(float compressionQuality, WebPWriterPreset preset) {
         super.canWriteCompressed = true;
@@ -82,6 +85,7 @@ public final class WebPWriterParam extends ImageWriteParam {
 
     /**
      * Set compression method/speed
+     *
      * @param method compression method (@see WebPWriterMethod)
      */
     public void setMethod(WebPWriterMethod method) {
@@ -95,6 +99,7 @@ public final class WebPWriterParam extends ImageWriteParam {
 
     /**
      * Set predefined preset
+     *
      * @param preset (@see WebPWriterPreset)
      */
     public void setPreset(WebPWriterPreset preset) {
@@ -107,6 +112,7 @@ public final class WebPWriterParam extends ImageWriteParam {
 
     /**
      * set image characteristics hint
+     *
      * @param imageHint (@see WebPWriterHint) image hint
      */
     public void setImageHint(WebPWriterHint imageHint) {
@@ -119,6 +125,7 @@ public final class WebPWriterParam extends ImageWriteParam {
 
     /**
      * enable/disable multi-threading (if available)
+     *
      * @param multiThreading boolean value to enable/disable multi-threading
      */
     public void setMultiThreading(Boolean multiThreading) {
@@ -139,6 +146,7 @@ public final class WebPWriterParam extends ImageWriteParam {
 
     /**
      * reduce memory usage with slower encoding
+     *
      * @param lowMemory boolean value to enable/disable low memory usage mode
      */
     public void setLowMemory(Boolean lowMemory) {

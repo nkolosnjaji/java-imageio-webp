@@ -11,7 +11,6 @@ import javax.imageio.stream.ImageInputStream;
 import java.io.IOException;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
-import java.lang.foreign.ValueLayout;
 import java.util.Objects;
 
 import static io.github.nkolosnjaji.webp.gen.LibWebP.MODE_RGB;
@@ -79,14 +78,13 @@ class InternalReader {
     public Dimension getImageDimensionAfterDecoding() {
         int width;
         int height;
-        if (WebPDecoderOptions.use_scaling(WebPDecoderConfig.options(this.ms)) == 1)  {
+        if (WebPDecoderOptions.use_scaling(WebPDecoderConfig.options(this.ms)) == 1) {
             width = WebPDecoderOptions.scaled_width(WebPDecoderConfig.options(this.ms));
             height = WebPDecoderOptions.scaled_height(WebPDecoderConfig.options(this.ms));
         } else if (WebPDecoderOptions.use_cropping(WebPDecoderConfig.options(this.ms)) == 1) {
             width = WebPDecoderOptions.crop_width(WebPDecoderConfig.options(this.ms));
             height = WebPDecoderOptions.crop_height(WebPDecoderConfig.options(this.ms));
-        }
-        else {
+        } else {
             width = WebPBitstreamFeatures.width(WebPDecoderConfig.input(this.ms));
             height = WebPBitstreamFeatures.height(WebPDecoderConfig.input(this.ms));
         }

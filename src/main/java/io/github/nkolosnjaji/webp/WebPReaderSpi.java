@@ -36,8 +36,7 @@ public final class WebPReaderSpi extends ImageReaderSpi {
             try {
                 WebP.getHeader(iis);
                 return true;
-            }
-            catch (Exception _) {
+            } catch (Exception _) {
                 return false;
             } finally {
                 iis.reset();

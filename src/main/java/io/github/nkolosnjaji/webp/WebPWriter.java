@@ -21,8 +21,7 @@ public final class WebPWriter extends ImageWriter {
                 param = this.getDefaultWriteParam();
             }
             WebP.encode(image.getRenderedImage(), param, this.getOutput());
-        }
-        else {
+        } else {
             throw new RuntimeException("Unsupported type"); //TODO
         }
 

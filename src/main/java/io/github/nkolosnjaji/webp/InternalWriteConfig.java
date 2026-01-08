@@ -37,10 +37,10 @@ class InternalWriteConfig {
             WebPConfig.image_hint(this.ms, this.mapWebPHint(param.getImageHint()));
         }
 
-        if(Boolean.TRUE.equals(param.getMultiThreading())) {
+        if (Boolean.TRUE.equals(param.getMultiThreading())) {
             WebPConfig.thread_level(this.ms, 1);
         }
-        if(Boolean.TRUE.equals(param.getLowMemory())) {
+        if (Boolean.TRUE.equals(param.getLowMemory())) {
             WebPConfig.low_memory(this.ms, 1);
         }
 

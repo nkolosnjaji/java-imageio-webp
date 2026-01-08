@@ -9,6 +9,6 @@ class MemoryWriterFunction implements WebPWriterFunction.Function {
 
     @Override
     public int apply(MemorySegment data, long dataSize, MemorySegment picture) {
-        return dataSize == 0 ? 1 :LibWebP.WebPMemoryWrite(data, dataSize, picture);
+        return dataSize == 0 ? 1 : LibWebP.WebPMemoryWrite(data, dataSize, picture);
     }
 }

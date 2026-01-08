@@ -5,7 +5,6 @@ import io.github.nkolosnjaji.webp.exceptions.WebPWrongVersionException;
 import io.github.nkolosnjaji.webp.gen.LibWebP;
 import io.github.nkolosnjaji.webp.gen.WebPPicture;
 
-import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferByte;
 import java.awt.image.RenderedImage;
@@ -13,7 +12,6 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import java.util.Objects;
-import java.util.stream.IntStream;
 
 import static io.github.nkolosnjaji.webp.gen.LibWebP.WebPPictureRescale;
 import static io.github.nkolosnjaji.webp.gen.LibWebP.WebPPictureView;
@@ -66,9 +64,9 @@ class InternalPicture {
             for (int i = 0; i < data.length; i += 4) {
                 final var temp = data[i];
 
-                data[i] = data[i +1];     // blue
-                data[i + 1] = data[i +2]; // green
-                data[i + 2] = data[i +3]; // red
+                data[i] = data[i + 1];     // blue
+                data[i + 1] = data[i + 2]; // green
+                data[i + 2] = data[i + 3]; // red
                 data[i + 3] = temp;       // alpha
             }
         }

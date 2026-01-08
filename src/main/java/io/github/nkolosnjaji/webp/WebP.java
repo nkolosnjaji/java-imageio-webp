@@ -32,8 +32,6 @@ import java.nio.file.Path;
 import java.util.Objects;
 
 import static io.github.nkolosnjaji.webp.gen.LibWebP.WebPFreeDecBuffer;
-import static java.awt.image.BufferedImage.TYPE_INT_ARGB;
-import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 
 final class WebP {
 
@@ -83,8 +81,8 @@ final class WebP {
                     throw new WebPEncodingException(WebPPicture.error_code(picture.getMemorySegment()));
                 }
             } finally {
-                if (picture != null) picture.free();
                 if (writer != null) writer.free();
+                if (picture != null) picture.free();
             }
         }
     }

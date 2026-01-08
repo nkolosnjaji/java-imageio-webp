@@ -33,11 +33,9 @@ enum SupportedOs {
 //        }
         else if (os.toLowerCase().startsWith("mac") && arch.equals("x86_64")) {
             return MAC_X86_64;
-        }
-        else if (os.toLowerCase().startsWith("mac") && arch.equals("aarch64")) {
+        } else if (os.toLowerCase().startsWith("mac") && arch.equals("aarch64")) {
             return MAC_AARM_64;
-        }
-        else {
+        } else {
             throw new WebPException("Unsupported OS");
         }
     }

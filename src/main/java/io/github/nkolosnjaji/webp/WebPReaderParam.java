@@ -18,6 +18,7 @@ public final class WebPReaderParam extends ImageReadParam {
 
     /**
      * Set crop parameters with a given rectangle
+     *
      * @param crop parameter
      */
     public void setCrop(Crop crop) {
@@ -30,6 +31,7 @@ public final class WebPReaderParam extends ImageReadParam {
 
     /**
      * Set resize (after any cropping)
+     *
      * @param resize parameter
      */
     public void setResize(Resize resize) {
@@ -42,6 +44,7 @@ public final class WebPReaderParam extends ImageReadParam {
 
     /**
      * Flip the image vertically
+     *
      * @param flip parameter
      */
     public void setFlip(Boolean flip) {
@@ -54,6 +57,7 @@ public final class WebPReaderParam extends ImageReadParam {
 
     /**
      * enable/disable multi-threading (if available)
+     *
      * @param multiThreading boolean value to enable/disable multi-threading
      */
     public void setMultiThreading(Boolean multiThreading) {

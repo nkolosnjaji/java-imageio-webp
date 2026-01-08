@@ -2,9 +2,9 @@ name: CI - Build and Test
 
 on:
   push:
-    branches: ['**']  # Runs on push to any branch, including main
+    branches: [ '**' ]  # Runs on push to any branch, including main
   pull_request:
-    branches: ['**']  # Runs on PRs targeting any branch
+    branches: [ '**' ]  # Runs on PRs targeting any branch
 
 jobs:
   build-and-test:
@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-latest, macos-15-intel, ubuntu-latest]
+        os: [ macos-latest, macos-15-intel, ubuntu-latest ]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

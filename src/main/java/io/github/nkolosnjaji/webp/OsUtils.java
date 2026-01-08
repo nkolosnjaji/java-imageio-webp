@@ -10,7 +10,8 @@ import java.nio.file.StandardCopyOption;
 
 public class OsUtils {
 
-    private OsUtils() {}
+    private OsUtils() {
+    }
 
     public static Path getPathLibSharpYuv() {
         return getLibPath("libsharpyuv");
@@ -24,13 +25,12 @@ public class OsUtils {
         SupportedOs os = SupportedOs.getCurrent();
 
         try (InputStream lib = OsUtils.class.getResourceAsStream(getClassPathResource(libName, os))) {
-            Path tempLocation = Files.createTempFile(libName,os.suffix);
+            Path tempLocation = Files.createTempFile(libName, os.suffix);
             if (lib != null) {
                 Files.copy(lib, tempLocation, StandardCopyOption.REPLACE_EXISTING);
                 tempLocation.toFile().deleteOnExit();
                 return tempLocation;
-            }
-            else throw new WebPInitException("Not found");
+            } else throw new WebPInitException("Not found");
         } catch (IOException e) {
             throw new WebPInitException(e);
         }
