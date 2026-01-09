@@ -30,7 +30,7 @@ writing WebP [images](https://developers.google.com/speed/webp) using JAVA Forei
 
 **Possible values for architecture:**
 
-- unix_amd64 (x86-64)
+- unix_amd64 (Linux x86-64)
 - mac_x86_64 (MacOS Intel)
 - mac_aarch64 (MacOS Silicon)
 
