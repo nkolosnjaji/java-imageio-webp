@@ -83,7 +83,7 @@ ImageWriter writer = ImageIO.getImageWritersByMIMEType("image/webp").next();
 // Configure writing settings
 WebPWriterParam writeParam = new WebPWriterParam();
 writeParam.setCompressionQuality(1.0f); // default is 0.75
-writeParam.setCompressionType(param.setCompressionType(WebPWriterParam.COMPRESSION_LOSSLESS)); // default is COMPRESSION_LOSSY
+writeParam.setCompressionType(WebPWriterParam.COMPRESSION_LOSSLESS); // default is COMPRESSION_LOSSY
 
 // Configure the output
 writer.setOutput(Paths.get("output.webp"));
