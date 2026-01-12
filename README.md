@@ -64,18 +64,10 @@ BufferedImage image = reader.read(0, readParam);
 ```
 
 ## Writing WebP image:
-
-```
-// Read image
-BufferedImage image = ImageIO.read(new File("input.png"));
-
-// Write WebP image using default settings
-ImageIO.write(image, "webp", new File("output.webp"));
-```
-
 In order to customize writing settings use:
 
 ```
+// Read image
 BufferedImage image = ImageIO.read(new File("input.png"));
 
 ImageWriter writer = ImageIO.getImageWritersByMIMEType("image/webp").next();
@@ -88,6 +80,6 @@ writeParam.setCompressionType(WebPWriterParam.COMPRESSION_LOSSLESS); // default 
 // Configure the output
 writer.setOutput(Paths.get("output.webp"));
 
-// Encode
+// Write image
 writer.write(null, new IIOImage(image, null, null), writeParam);
 ```
