@@ -3,6 +3,7 @@ package io.github.nkolosnjaji.webp;
 import javax.imageio.ImageTypeSpecifier;
 import javax.imageio.ImageWriter;
 import javax.imageio.spi.ImageWriterSpi;
+import javax.imageio.stream.ImageOutputStream;
 import java.awt.image.DataBuffer;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -17,7 +18,7 @@ public final class WebPWriterSpi extends ImageWriterSpi {
                 new String[]{"webp"},
                 new String[]{"image/webp", "webp"},
                 WebPWriter.class.getName(),
-                new Class[]{Path.class},
+                new Class[]{Path.class, ImageOutputStream.class},
                 new String[]{WebPReaderSpi.class.getName()},
                 false,
                 null,

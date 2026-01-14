@@ -1,5 +1,6 @@
 package io.github.nkolosnjaji.webp;
 
+import io.github.nkolosnjaji.webp.exceptions.WebPException;
 import io.github.nkolosnjaji.webp.gen.WebPWriterFunction;
 
 import java.io.IOException;
@@ -22,7 +23,7 @@ class FileWriterFunction implements WebPWriterFunction.Function {
             }
             return 1;
         } catch (IOException e) {
-            throw new RuntimeException(e); //TODO throw specific error
+            throw new WebPException("Error during writing file", e);
         }
     }
 }

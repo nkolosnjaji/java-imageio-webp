@@ -64,6 +64,15 @@ BufferedImage image = reader.read(0, readParam);
 ```
 
 ## Writing WebP image:
+
+```
+// Read image
+BufferedImage image = ImageIO.read(new File("input.png"));
+
+// Write WebP image using default settings
+ImageIO.write(image, "webp", new File("output.webp"));
+```
+
 In order to customize writing settings use:
 
 ```

@@ -49,7 +49,9 @@ class ImageWriterTests {
         Path input = getInputPath(imageName);
         BufferedImage bi = getInputFile(input);
 
-        Path outPath = writeImage(bi, imageName);
+        Path outPath = WORKING_PATH.resolve(OUTPUT_DIR, "%s.webp".formatted(imageName));
+
+        assertDoesNotThrow(() -> ImageIO.write(bi, "webp", outPath.toFile()));
 
         assertEqualFiles(outPath, imageName);
     }
@@ -228,10 +230,6 @@ class ImageWriterTests {
         } catch (IOException _) {
             throw new RuntimeException(String.format("Unable to read input file from location: %s", imagePath.toString()));
         }
-    }
-
-    private Path writeImage(BufferedImage image, String name) {
-        return writeImage(image, name, null);
     }
 
     private Path writeImage(BufferedImage image, String name, WebPWriterParam param) {

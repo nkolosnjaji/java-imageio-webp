@@ -6,13 +6,16 @@ import io.github.nkolosnjaji.webp.exceptions.WebPFormatException;
 import io.github.nkolosnjaji.webp.gen.LibWebP;
 import io.github.nkolosnjaji.webp.gen.WebPBitstreamFeatures;
 import io.github.nkolosnjaji.webp.gen.WebPDecBuffer;
+import io.github.nkolosnjaji.webp.gen.WebPMemoryWriter;
 import io.github.nkolosnjaji.webp.gen.WebPPicture;
 import io.github.nkolosnjaji.webp.gen.WebPRGBABuffer;
+import io.github.nkolosnjaji.webp.gen.WebPWriterFunction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.imageio.ImageWriteParam;
 import javax.imageio.stream.ImageInputStream;
+import javax.imageio.stream.ImageOutputStream;
 import java.awt.*;
 import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
@@ -28,7 +31,10 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.Objects;
 
 import static io.github.nkolosnjaji.webp.gen.LibWebP.WebPFreeDecBuffer;
@@ -49,42 +55,65 @@ final class WebP {
 
     public static void encode(RenderedImage image, ImageWriteParam imageWriteParam, Object out) throws IOException {
         Objects.requireNonNull(image, "Image must not be null");
+        Objects.requireNonNull(image, "imageWriteParam must not be null");
+        Objects.requireNonNull(image, "Out parameter must not be null");
 
-        if (out instanceof Path path) {
-            encodeInternal(image, path, imageWriteParam);
-        } else {
-            throw new IllegalStateException("out parameter must be %s".formatted(Path.class.getSimpleName()));
-        }
-    }
-
-    private static void encodeInternal(RenderedImage image, Path path, ImageWriteParam imageWriteParam) throws IOException {
         WebPWriterParam param = switch (imageWriteParam) {
             case WebPWriterParam wwp -> wwp;
             case ImageWriteParam iwp -> new WebPWriterParam(iwp.getCompressionQuality());
             case null -> new WebPWriterParam();
         };
 
-        InternalWriter writer = null;
         InternalPicture picture = null;
+        FileChannel fileChannel = null;
 
         try (Arena arena = Arena.ofConfined()) {
             try {
+                WebPWriterFunction.Function writerFunction;
+
+                switch (out) {
+                    case Path path -> {
+                        Files.deleteIfExists(path);
+                        fileChannel = FileChannel.open(path,
+                                StandardOpenOption.WRITE, StandardOpenOption.APPEND, StandardOpenOption.CREATE_NEW);
+                        writerFunction = new FileWriterFunction(fileChannel);
+                    }
+                    case ImageOutputStream imageOutputStream ->
+                            writerFunction = new ImageOutputStreamWriterFunction(imageOutputStream);
+                    case null, default -> throw new IllegalStateException("out parameter must be %s or %s".formatted(
+                            Path.class.getSimpleName(),
+                            ImageOutputStream.class.getSimpleName()
+                    ));
+                }
+
                 picture = new InternalPicture(arena, image);
                 picture.cropAndResize(param);
 
-                writer = new InternalWriter(arena, picture, path);
-
                 InternalWriteConfig config = new InternalWriteConfig(arena, param);
+                initWriter(arena, picture, writerFunction);
 
                 final int result = LibWebP.WebPEncode(config.getMemorySegment(), picture.getMemorySegment());
                 if (result != 1) {
                     throw new WebPEncodingException(WebPPicture.error_code(picture.getMemorySegment()));
                 }
             } finally {
-                if (writer != null) writer.free();
                 if (picture != null) picture.free();
+                if (fileChannel != null) fileChannel.close();
             }
         }
+    }
+
+    private static void initWriter(Arena arena, InternalPicture picture, WebPWriterFunction.Function writerFunction) {
+        Objects.requireNonNull(arena, "arena must not be null");
+        Objects.requireNonNull(picture, "picture must not be null");
+        Objects.requireNonNull(writerFunction, "writerFunction must not be null");
+
+        MemorySegment writer = WebPMemoryWriter.allocate(arena);
+
+        LibWebP.WebPMemoryWriterInit(writer);
+
+        MemorySegment writerFunctionMemorySegment = WebPWriterFunction.allocate(writerFunction, arena);
+        WebPPicture.writer(picture.getMemorySegment(), writerFunctionMemorySegment);
     }
 
     public static Header getHeader(ImageInputStream iis) throws IOException {
