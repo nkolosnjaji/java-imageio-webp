@@ -65,7 +65,6 @@ class ImageReaderTests {
     void decodeResize(String imageName) {
         Resize resize = new Resize(25, 50);
         WebPReaderParam param = new WebPReaderParam();
-        param.setFlip(true);
         param.setResize(resize);
 
         Path input = getGeneratedPath(imageName);

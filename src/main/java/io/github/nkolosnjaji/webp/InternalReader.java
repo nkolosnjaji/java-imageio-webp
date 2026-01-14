@@ -20,34 +20,54 @@ class InternalReader {
 
     private final MemorySegment ms;
 
-    public InternalReader(Arena arena, WebP.Header header, WebPReaderParam imageReadParam) {
+    public InternalReader(Arena arena, WebP.Header header, WebPReaderParam param) {
         Objects.requireNonNull(arena, "arena must not be null");
-        Objects.requireNonNull(imageReadParam, "imageWriteParam must not be null");
+        Objects.requireNonNull(param, "imageWriteParam must not be null");
 
         this.ms = WebPDecoderConfig.allocate(arena);
         if (LibWebP.WebPInitDecoderConfigInternal(this.ms, LibWebP.WEBP_DECODER_ABI_VERSION()) == 0) {
             throw new WebPWrongVersionException();
         }
 
-        if (imageReadParam.getCrop() != null) {
-            WebPDecoderOptions.crop_left(WebPDecoderConfig.options(this.ms), imageReadParam.getCrop().x());
-            WebPDecoderOptions.crop_top(WebPDecoderConfig.options(this.ms), imageReadParam.getCrop().y());
-            WebPDecoderOptions.crop_width(WebPDecoderConfig.options(this.ms), imageReadParam.getCrop().w());
-            WebPDecoderOptions.crop_height(WebPDecoderConfig.options(this.ms), imageReadParam.getCrop().h());
+        if (param.getDither() != null) {
+            WebPDecoderOptions.dithering_strength(WebPDecoderConfig.options(this.ms), param.getDither());
+        }
+
+        if (param.getCrop() != null) {
+            WebPDecoderOptions.crop_left(WebPDecoderConfig.options(this.ms), param.getCrop().x());
+            WebPDecoderOptions.crop_top(WebPDecoderConfig.options(this.ms), param.getCrop().y());
+            WebPDecoderOptions.crop_width(WebPDecoderConfig.options(this.ms), param.getCrop().w());
+            WebPDecoderOptions.crop_height(WebPDecoderConfig.options(this.ms), param.getCrop().h());
             WebPDecoderOptions.use_cropping(WebPDecoderConfig.options(this.ms), 1);
         }
 
-        if (imageReadParam.getResize() != null) {
-            WebPDecoderOptions.scaled_width(WebPDecoderConfig.options(this.ms), imageReadParam.getResize().w());
-            WebPDecoderOptions.scaled_height(WebPDecoderConfig.options(this.ms), imageReadParam.getResize().h());
+        if (param.getResize() != null) {
+            WebPDecoderOptions.scaled_width(WebPDecoderConfig.options(this.ms), param.getResize().w());
+            WebPDecoderOptions.scaled_height(WebPDecoderConfig.options(this.ms), param.getResize().h());
             WebPDecoderOptions.use_scaling(WebPDecoderConfig.options(this.ms), 1);
         }
 
-        if (Boolean.TRUE.equals(imageReadParam.getFlip())) {
+        if (param.isAlphaDither()) {
+            WebPDecoderOptions.alpha_dithering_strength(WebPDecoderConfig.options(this.ms), 100);
+        }
+
+        if (param.isFlip()) {
             WebPDecoderOptions.flip(WebPDecoderConfig.options(this.ms), 1);
         }
 
-        if (Boolean.TRUE.equals(imageReadParam.getMultiThreading())) {
+        if (param.isNoFancy()) {
+            WebPDecoderOptions.no_fancy_upsampling(WebPDecoderConfig.options(this.ms), 1);
+        }
+
+        if (param.isNoFilter()) {
+            WebPDecoderOptions.bypass_filtering(WebPDecoderConfig.options(this.ms), 1);
+        }
+
+        if (param.isNoDither()) {
+            WebPDecoderOptions.dithering_strength(WebPDecoderConfig.options(this.ms), 0);
+        }
+
+        if (param.isMultiThreading()) {
             WebPDecoderOptions.use_threads(WebPDecoderConfig.options(this.ms), 1);
         }
 

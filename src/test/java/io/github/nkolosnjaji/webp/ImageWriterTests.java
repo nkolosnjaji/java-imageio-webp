@@ -75,7 +75,7 @@ class ImageWriterTests {
         String outputName = "%s_m0".formatted(imageName);
 
         WebPWriterParam param = new WebPWriterParam();
-        param.setMethod(WebPWriterParam.WebPWriterMethod.FASTEST);
+        param.setCompressionMethod(0);
         Path outPath = writeImage(bi, outputName, param);
 
         assertEqualFiles(outPath, outputName);
@@ -128,10 +128,10 @@ class ImageWriterTests {
     void writeResize(String imageName) {
         Path input = getInputPath(imageName);
         BufferedImage bi = getInputFile(input);
-        String outputName = "%s_resize100100".formatted(imageName);
+        String outputName = "%s_resize200100".formatted(imageName);
 
         WebPWriterParam param = new WebPWriterParam();
-        param.setResize(new Resize(100, 100));
+        param.setResize(new Resize(200, 100));
         Path outPath = writeImage(bi, outputName, param);
 
         assertEqualFiles(outPath, outputName);
@@ -142,10 +142,10 @@ class ImageWriterTests {
     void writeCropAndResize(String imageName) {
         Path input = getInputPath(imageName);
         BufferedImage bi = getInputFile(input);
-        String outputName = "%s_resize100100_crop100100100100".formatted(imageName);
+        String outputName = "%s_resize100100_crop100100200100".formatted(imageName);
 
         WebPWriterParam param = new WebPWriterParam();
-        param.setResize(new Resize(100, 100));
+        param.setResize(new Resize(200, 100));
         param.setCrop(new Crop(100, 100, 100, 100));
         Path outPath = writeImage(bi, outputName, param);
 
@@ -161,6 +161,62 @@ class ImageWriterTests {
 
         WebPWriterParam param = new WebPWriterParam();
         param.setCompressionType(WebPWriterParam.COMPRESSION_LOSSLESS);
+        Path outPath = writeImage(bi, outputName, param);
+
+        assertEqualFiles(outPath, outputName);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"rgba", "rgb"})
+    void writeSharpYuv(String imageName) {
+        Path input = getInputPath(imageName);
+        BufferedImage bi = getInputFile(input);
+        String outputName = "%s_sharpYuv".formatted(imageName);
+
+        WebPWriterParam param = new WebPWriterParam();
+        param.setUseSharpYuv(true);
+        Path outPath = writeImage(bi, outputName, param);
+
+        assertEqualFiles(outPath, outputName);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"rgba", "rgb"})
+    void writeAutoFilter(String imageName) {
+        Path input = getInputPath(imageName);
+        BufferedImage bi = getInputFile(input);
+        String outputName = "%s_autoFilter".formatted(imageName);
+
+        WebPWriterParam param = new WebPWriterParam();
+        param.setAutoFilter(true);
+        Path outPath = writeImage(bi, outputName, param);
+
+        assertEqualFiles(outPath, outputName);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"rgba", "rgb"})
+    void writeAlphaFilter(String imageName) {
+        Path input = getInputPath(imageName);
+        BufferedImage bi = getInputFile(input);
+        String outputName = "%s_alphaFilter".formatted(imageName);
+
+        WebPWriterParam param = new WebPWriterParam();
+        param.setAlphaFilter(WebPWriterParam.WebPWriterAlphaFilter.BEST);
+        Path outPath = writeImage(bi, outputName, param);
+
+        assertEqualFiles(outPath, outputName);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"rgba", "rgb"})
+    void writeSharpness(String imageName) {
+        Path input = getInputPath(imageName);
+        BufferedImage bi = getInputFile(input);
+        String outputName = "%s_sharpness".formatted(imageName);
+
+        WebPWriterParam param = new WebPWriterParam();
+        param.setSharpness(6);
         Path outPath = writeImage(bi, outputName, param);
 
         assertEqualFiles(outPath, outputName);

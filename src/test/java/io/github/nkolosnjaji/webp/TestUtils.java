@@ -1,5 +1,13 @@
 package io.github.nkolosnjaji.webp;
 
+import io.github.nkolosnjaji.webp.gen.LibWebP;
+import org.junit.jupiter.api.Test;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.zip.Adler32;
@@ -52,4 +60,15 @@ class TestUtils {
 
         assertEquals(sourceValue, generatedValue, "Checksums of source and generated pictures are not equal");
     }
+
+//    void generate() throws IOException {
+//        BufferedImage image = new BufferedImage(LibWebP.WEBP_MAX_DIMENSION(), LibWebP.WEBP_MAX_DIMENSION(), BufferedImage.TYPE_INT_ARGB);
+//        Graphics2D g2d = image.createGraphics();
+//        g2d.setColor(new Color(50, 150, 250, 200));
+//        g2d.fillRect(0, 0, LibWebP.WEBP_MAX_DIMENSION(), LibWebP.WEBP_MAX_DIMENSION());
+//        g2d.dispose();
+//
+//        var rootDir = System.getProperty("user.dir");
+//        ImageIO.write(image, "png", new File(rootDir + "/1.png"));
+//    }
 }

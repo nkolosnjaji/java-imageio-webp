@@ -13,9 +13,9 @@ public final class WebPWriterSpi extends ImageWriterSpi {
     public WebPWriterSpi() {
         super("Nikola Kološnjaji",
                 "1.0",
-                new String[]{"WebP", "com/nkolosnjaji/webp"},
-                new String[]{"com/nkolosnjaji/webp"},
-                new String[]{"image/webp"},
+                new String[]{"WebP", "webp"},
+                new String[]{"webp"},
+                new String[]{"image/webp", "webp"},
                 WebPWriter.class.getName(),
                 new Class[]{Path.class},
                 new String[]{WebPReaderSpi.class.getName()},

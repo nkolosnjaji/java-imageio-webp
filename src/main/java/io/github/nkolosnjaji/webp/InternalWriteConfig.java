@@ -29,19 +29,36 @@ class InternalWriteConfig {
             WebPConfig.lossless(this.ms, 1);
         }
 
-        if (param.getMethod() != null) {
-            WebPConfig.method(this.ms, param.getMethod().getValue());
+        if (param.getCompressionMethod() != null) {
+            WebPConfig.method(this.ms, param.getCompressionMethod());
         }
 
         if (param.getImageHint() != null) {
             WebPConfig.image_hint(this.ms, this.mapWebPHint(param.getImageHint()));
         }
 
-        if (Boolean.TRUE.equals(param.getMultiThreading())) {
+        if (param.getSharpness() != null) {
+            WebPConfig.filter_sharpness(this.ms, param.getSharpness());
+        }
+
+        if (param.getAlphaFilter() != null) {
+            WebPConfig.alpha_filtering(this.ms, param.getAlphaFilter().getValue());
+        }
+
+        if (param.isMultiThreading()) {
             WebPConfig.thread_level(this.ms, 1);
         }
-        if (Boolean.TRUE.equals(param.getLowMemory())) {
+
+        if (param.isLowMemory()) {
             WebPConfig.low_memory(this.ms, 1);
+        }
+
+        if (param.isUseSharpYuv()) {
+            WebPConfig.use_sharp_yuv(this.ms, 1);
+        }
+
+        if (param.isAutoFilter()) {
+            WebPConfig.autofilter(this.ms, 1);
         }
 
         // validate
