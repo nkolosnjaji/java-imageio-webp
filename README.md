@@ -38,7 +38,8 @@ writing WebP [images](https://developers.google.com/speed/webp) using JAVA Forei
 
 | java-imageio-webp | java-imageio-webp-lib | WebP Version  |
 |-------------------|-----------------------|---------------|
-| 1.0.0             | 0.0.4                 | 1.6.0         | 
+| 1.0.0             | 0.0.4                 | 1.6.0         |
+| 1.0.1             | 0.0.4                 | 1.6.0         |
 
 2. Use like any other Image I/O reader and writer.
 
